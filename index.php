@@ -1,8 +1,12 @@
 <?php
+
+if (isset($_POST['email'])){
+
+
 require_once './vendor/autoload.php';
 
 // Create the Transport
-$transport = (new Swift_SmtpTransport('smtp.example.org', 25))
+$transport = (new Swift_SmtpTransport('smtp.gmail.com', 465))
     ->setUsername('your username')
     ->setPassword('your password')
 ;
@@ -11,11 +15,21 @@ $transport = (new Swift_SmtpTransport('smtp.example.org', 25))
 $mailer = new Swift_Mailer($transport);
 
 // Create a message
-$message = (new Swift_Message('Wonderful Subject'))
+$message = (new Swift_Message('Some Subject'))
     ->setFrom(['john@doe.com' => 'John Doe'])
-    ->setTo(['receiver@domain.org', 'other@domain.org' => 'A name'])
-    ->setBody('Here is the message itself')
+    ->setTo([$_POST['email'] => 'Calypso'])
+    ->setBody('Here is the message for email')
 ;
 
 // Send the message
 $result = $mailer->send($message);
+
+}
+
+?>
+
+
+<form action ="" method="post">
+    <input type="text"  name="email"  placeholder="Enter your email">
+    <input type="submit" value="Mail ME">
+</form>
